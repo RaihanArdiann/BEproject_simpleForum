@@ -1,0 +1,11 @@
+services :
+  db :
+    image: mysql:latest
+    container_name: local-mysql-simpleForum
+    ports:
+    - "3306:3306"
+    environment:
+    - MYSQL_ROOT_PASSWORD=superSecretPassword
+    - MYSQL_DATABASE=simpleForum
+    volumes:
+      - D:\Learn\Golang\Fastcampus\SitusForum\db:/var/lib/mysql
