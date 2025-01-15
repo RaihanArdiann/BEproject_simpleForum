@@ -3,9 +3,11 @@ package main
 import (
 	"log"
 
+	"github.com/RaihanArdiann/BEproject_simpleForum/internal/configs"
+	"github.com/RaihanArdiann/BEproject_simpleForum/internal/handlers/memberships"
+	membershipRepo "github.com/RaihanArdiann/BEproject_simpleForum/internal/repository/memberships"
+	"github.com/RaihanArdiann/BEproject_simpleForum/pkg/internalsql"
 	"github.com/gin-gonic/gin"
-	"github.com/raihan.ardiann/simpleForum/internal/configs"
-	"github.com/raihan.ardiann/simpleForum/internal/handlers/memberships"
 )
 
 func main() {
@@ -17,7 +19,7 @@ func main() {
 
 	err := configs.Init(
 		configs.WithConfigFolder(
-			[]string{"./internal/configs/"},
+			[]string{"./internal/configs"},
 		),
 		configs.WithConfigFile("config"),
 		configs.WithConfigType("yaml"),
@@ -28,8 +30,15 @@ func main() {
 	cfg = configs.Get()
 	log.Println("config", cfg)
 
+	db, err := internalsql.Connect(cfg.Database.DataSourceName)
+	if err != nil {
+		log.Fatal("failed to connect to database")
+	}
+
+	_ = membershipRepo.NewRepository(db)
+
 	membershipsHandler := memberships.NewHandler(r)
 	membershipsHandler.RegisterRoute()
 
-	r.Run(cfg.Service.Port) // listen and serve on 0.0.0.0:8080 (for windows "localhost:8080")
+	r.Run(cfg.Service.Port)
 }
