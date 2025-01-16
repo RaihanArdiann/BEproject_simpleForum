@@ -1,20 +1,31 @@
 package memberships
 
 import (
+	"context"
+
+	"github.com/RaihanArdiann/BEproject_simpleForum/internal/model/memberships"
 	"github.com/gin-gonic/gin"
 )
 
-type handler struct {
-	*gin.Engine
+type membershipService interface {
+	SignUp(ctx context.Context, req memberships.SignUpRequest) error
 }
 
-func NewHandler(api *gin.Engine) *handler {
-	return &handler{
-		Engine: api,
+type Handler struct {
+	*gin.Engine
+
+	membershipSvc membershipService
+}
+
+func NewHandler(api *gin.Engine, membershipSvc membershipService) *Handler {
+	return &Handler{
+		Engine:        api,
+		membershipSvc: membershipSvc,
 	}
 }
 
-func (h *handler) RegisterRoute() {
+func (h *Handler) RegisterRoute() {
 	route := h.Group("membership")
 	route.GET("/ping", h.ping)
+	route.POST("/sign-up", h.SignUp)
 }
