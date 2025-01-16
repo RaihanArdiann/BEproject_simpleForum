@@ -6,6 +6,7 @@ import (
 	"github.com/RaihanArdiann/BEproject_simpleForum/internal/configs"
 	"github.com/RaihanArdiann/BEproject_simpleForum/internal/handlers/memberships"
 	membershipRepo "github.com/RaihanArdiann/BEproject_simpleForum/internal/repository/memberships"
+	membershipSvc "github.com/RaihanArdiann/BEproject_simpleForum/internal/services/memberships"
 	"github.com/RaihanArdiann/BEproject_simpleForum/pkg/internalsql"
 	"github.com/gin-gonic/gin"
 )
@@ -35,9 +36,11 @@ func main() {
 		log.Fatal("failed to connect to database")
 	}
 
-	_ = membershipRepo.NewRepository(db)
+	membershipRepo := membershipRepo.NewRepository(db)
 
-	membershipsHandler := memberships.NewHandler(r)
+	membershipService := membershipSvc.NewService(membershipRepo)
+
+	membershipsHandler := memberships.NewHandler(r, membershipService)
 	membershipsHandler.RegisterRoute()
 
 	r.Run(cfg.Service.Port)
