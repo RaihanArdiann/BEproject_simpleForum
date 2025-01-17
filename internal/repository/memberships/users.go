@@ -19,7 +19,7 @@ func (r *repository) GetUser(ctx context.Context, email, username string) (*memb
 		}
 		return nil, err
 	}
-	return nil, nil
+	return &response, nil
 }
 
 func (r *repository) CreateUser(ctx context.Context, model memberships.UserModel) error {
