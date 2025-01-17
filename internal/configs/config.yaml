@@ -1,5 +1,6 @@
 service:
   port: ":9876"
+  secretJWT: "simpleForumtest"
 
 database:
   dataSourceName: "root:superSecretPassword@tcp(localhost:3306)/simpleForum?parseTime=true"
