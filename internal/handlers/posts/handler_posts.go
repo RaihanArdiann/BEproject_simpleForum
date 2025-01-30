@@ -28,7 +28,6 @@ func NewHandler(api *gin.Engine, postsSvc postsService) *Handler {
 func (h *Handler) RegisterRoute() {
 	route := h.Group("posts")
 	route.Use(middleware.AuthMiddleware())
-
 	route.POST("/create", h.CreatePost)
 
 }
