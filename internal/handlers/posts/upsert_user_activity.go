@@ -26,6 +26,7 @@ func (h *Handler) UpsertUserActivity(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"error": errors.New("postID pada param tidak valid").Error(),
 		})
+		return
 	}
 
 	userID := c.GetInt64("userID")

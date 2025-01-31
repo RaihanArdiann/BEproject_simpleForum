@@ -36,6 +36,7 @@ func (s *service) UpsertUserActivity(ctx context.Context, postID, userID int64, 
 	}
 	if err != nil {
 		log.Error().Err(err).Msg("error create or update user activities")
+		return err
 	}
 	return nil
 }

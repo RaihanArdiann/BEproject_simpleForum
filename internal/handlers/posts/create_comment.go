@@ -25,7 +25,9 @@ func (h *Handler) CreateComment(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"error": errors.New("postID pada param tidak valid").Error(),
 		})
+		return
 	}
+
 	userID := c.GetInt64("userID")
 
 	err = h.postSvc.CreateComment(ctx, postID, userID, request)
