@@ -1,0 +1,1 @@
+DEOP TABLE IF NOT EXIST user_activities;

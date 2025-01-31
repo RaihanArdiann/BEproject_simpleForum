@@ -9,16 +9,17 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func (h *Handler) CreateComment(c *gin.Context) {
+func (h *Handler) UpsertUserActivity(c *gin.Context) {
 	ctx := c.Request.Context()
 
-	var request posts.CreateCommentRequest
+	var request posts.UserActivityRequest
 	if err := c.ShouldBindJSON(&request); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"error": err.Error(),
 		})
 		return
 	}
+
 	postIDStr := c.Param("postID")
 	postID, err := strconv.ParseInt(postIDStr, 10, 64)
 	if err != nil {
@@ -30,11 +31,11 @@ func (h *Handler) CreateComment(c *gin.Context) {
 
 	userID := c.GetInt64("userID")
 
-	err = h.postSvc.CreateComment(ctx, postID, userID, request)
+	err = h.postSvc.UpsertUserActivity(ctx, postID, userID, request)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"error": err.Error(),
 		})
 	}
-	c.Status(http.StatusCreated)
+	c.Status(http.StatusOK)
 }
