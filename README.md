@@ -4,6 +4,8 @@ Simple Forum Backend
 
 Simple Forum Backend is a RESTful API that provides core forum functionalities such as authentication, posting, commenting, and liking posts. It is built with security and efficiency in mind, utilizing JWT for authentication and pagination for handling large datasets.
 
+
+
 🚀 Features
 
 User Authentication & Management
@@ -30,6 +32,8 @@ Secure authentication using JWT
 
 Refresh token mechanism for extended sessions
 
+
+
 🛠 Tech Stack
 
 Backend: Go / Gin
@@ -37,6 +41,8 @@ Backend: Go / Gin
 Database: MySQL
 
 Authentication: JWT & Refresh Token
+
+
 
 ⚙️ Installation & Setup
 
@@ -61,6 +67,8 @@ make migrate-down
 4. Start the Server
 
 make run
+
+
 
 📡 API Endpoints
 
@@ -87,6 +95,8 @@ GET posts/:postID? - Get a single post
 ❤️ Likes
 
 PUT /posts/user-activity/:postID - Like a post
+
+
 
 🔄 Future Improvements
 
